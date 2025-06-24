@@ -1,1 +1,661 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript Culminating Project 🚀</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
+        body {
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #fff;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            backdrop-filter: blur(10px);
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .console-output {
+            background: #1e1e1e;
+            border: 2px solid #444;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            max-height: 500px;
+            overflow-y: auto;
+            font-size: 14px;
+            white-space: pre-wrap;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .task-section {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 25px 0;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .task-title {
+            font-size: 1.5em;
+            color: #ffd700;
+            margin-bottom: 15px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        }
+
+        .run-btn {
+            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            margin: 10px 5px;
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
+        }
+
+        .run-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 107, 107, 0.6);
+        }
+
+        .clear-btn {
+            background: linear-gradient(45deg, #74b9ff, #0984e3);
+            box-shadow: 0 4px 15px rgba(116, 185, 255, 0.4);
+        }
+
+        .clear-btn:hover {
+            box-shadow: 0 6px 20px rgba(116, 185, 255, 0.6);
+        }
+
+        .controls {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .interactive-section {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        input, select {
+            padding: 10px;
+            border-radius: 5px;
+            border: none;
+            margin: 5px;
+            font-size: 14px;
+        }
+
+        .emoji {
+            font-size: 1.2em;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .task-section {
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        /* Scrollbar styling */
+        .console-output::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .console-output::-webkit-scrollbar-track {
+            background: #2d2d2d;
+        }
+
+        .console-output::-webkit-scrollbar-thumb {
+            background: #555;
+            border-radius: 4px;
+        }
+
+        .console-output::-webkit-scrollbar-thumb:hover {
+            background: #777;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚀 JavaScript Culminating Project</h1>
+            <p>Interactive Programming Demonstration</p>
+            <p>Complete with all 7 required tasks + bonus features!</p>
+        </div>
+
+        <div class="controls">
+            <button class="run-btn" onclick="runAllTasks()">🎯 Run All Tasks</button>
+            <button class="clear-btn" onclick="clearConsole()">🧹 Clear Console</button>
+        </div>
+
+        <div id="console" class="console-output">
+            Click "Run All Tasks" to see the magic happen! ✨
+        </div>
+
+        <div class="task-section">
+            <div class="task-title">📝 Individual Task Controls</div>
+            <button class="run-btn" onclick="runTask1()">Task 1: Hello World</button>
+            <button class="run-btn" onclick="runTask2()">Task 2: FizzBuzz</button>
+            <button class="run-btn" onclick="runTask3()">Task 3: Database</button>
+            <button class="run-btn" onclick="runTask4()">Task 4: Strings</button>
+            <button class="run-btn" onclick="runTask5()">Task 5: Arrays</button>
+            <button class="run-btn" onclick="runTask6()">Task 6: Temperature</button>
+            <button class="run-btn" onclick="runTask7()">Task 7: JS Quirks</button>
+        </div>
+
+        <div class="interactive-section">
+            <div class="task-title">🌡️ Interactive Temperature Converter</div>
+            <input type="number" id="tempInput" placeholder="Enter temperature" value="25">
+            <select id="fromUnit">
+                <option value="C">Celsius</option>
+                <option value="F">Fahrenheit</option>
+                <option value="K">Kelvin</option>
+            </select>
+            <span>to</span>
+            <select id="toUnit">
+                <option value="F">Fahrenheit</option>
+                <option value="C">Celsius</option>
+                <option value="K">Kelvin</option>
+            </select>
+            <button class="run-btn" onclick="convertTemperature()">Convert</button>
+            <div id="tempResult"></div>
+        </div>
+
+        <div class="interactive-section">
+            <div class="task-title">📋 Interactive Inventory Manager</div>
+            <input type="text" id="itemName" placeholder="Item name" value="Laptops">
+            <input type="number" id="itemQty" placeholder="Quantity" value="10">
+            <button class="run-btn" onclick="addToInventory()">Add Item</button>
+            <button class="run-btn" onclick="checkInventory()">Check Item</button>
+            <button class="run-btn" onclick="removeFromInventory()">Remove Item</button>
+            <button class="clear-btn" onclick="showInventory()">Show All</button>
+        </div>
+    </div>
+
+    <script>
+        // Console output management
+        const consoleDiv = document.getElementById('console');
+        let consoleOutput = '';
+
+        function log(message) {
+            consoleOutput += message + '\n';
+            consoleDiv.textContent = consoleOutput;
+            consoleDiv.scrollTop = consoleDiv.scrollHeight;
+        }
+
+        function clearConsole() {
+            consoleOutput = '';
+            consoleDiv.textContent = 'Console cleared! Ready for new output ✨';
+        }
+
+        // Global inventory for interactive demo
+        const globalInventory = new Map();
+
+        // =============================================================================
+        // TASK 1: HELLO WORLD
+        // =============================================================================
+        function runTask1() {
+            log("📝 TASK 1: HELLO WORLD");
+            log("=".repeat(30));
+            
+            log("Hello, World! 🌍");
+            
+            function greetWorld(name = "World") {
+                return `Hello, ${name}! Welcome to JavaScript! 🎉`;
+            }
+            
+            log(greetWorld());
+            log(greetWorld("Programming Student"));
+            log(greetWorld("GitHub Visitor"));
+            log("");
+        }
+
+        // =============================================================================
+        // TASK 2: FIZZBUZZ (n=50)
+        // =============================================================================
+        function runTask2() {
+            log("📝 TASK 2: FIZZBUZZ CHALLENGE");
+            log("=".repeat(30));
+            
+            function fizzBuzz(n) {
+                log(`🎯 FizzBuzz Challenge (1 to ${n}):`);
+                
+                for (let i = 1; i <= n; i++) {
+                    let output = "";
+                    
+                    if (i % 3 === 0) output += "Fizz";
+                    if (i % 5 === 0) output += "Buzz";
+                    
+                    log(`${i.toString().padStart(2)}: ${output || i}`);
+                }
+            }
+            
+            fizzBuzz(50);
+            log("");
+        }
+
+        // =============================================================================
+        // TASK 3: DATABASE - INVENTORY MANAGEMENT SYSTEM
+        // =============================================================================
+        class InventoryDatabase {
+            constructor() {
+                this.inventory = new Map();
+                log("📦 Inventory Database initialized!");
+            }
+            
+            addItem(name, quantity) {
+                if (this.inventory.has(name)) {
+                    this.inventory.set(name, this.inventory.get(name) + quantity);
+                    log(`✅ Added ${quantity} ${name}(s). Total: ${this.inventory.get(name)}`);
+                } else {
+                    this.inventory.set(name, quantity);
+                    log(`🆕 New item '${name}' added with quantity: ${quantity}`);
+                }
+            }
+            
+            checkAvailability(itemName) {
+                if (this.inventory.has(itemName)) {
+                    const quantity = this.inventory.get(itemName);
+                    log(`📋 ${itemName}: ${quantity} units available`);
+                    return { available: true, quantity: quantity };
+                } else {
+                    log(`❌ ${itemName} is not in inventory`);
+                    return { available: false, quantity: 0 };
+                }
+            }
+            
+            removeItem(name, quantity) {
+                if (!this.inventory.has(name)) {
+                    log(`❌ Cannot remove ${name} - not in inventory`);
+                    return false;
+                }
+                
+                const currentQty = this.inventory.get(name);
+                if (currentQty < quantity) {
+                    log(`⚠️ Cannot remove ${quantity} ${name}(s) - only ${currentQty} available`);
+                    return false;
+                }
+                
+                const newQty = currentQty - quantity;
+                if (newQty === 0) {
+                    this.inventory.delete(name);
+                    log(`🗑️ ${name} completely removed from inventory`);
+                } else {
+                    this.inventory.set(name, newQty);
+                    log(`📉 Removed ${quantity} ${name}(s). Remaining: ${newQty}`);
+                }
+                return true;
+            }
+            
+            displayInventory() {
+                log("📊 Current Inventory:");
+                log("=".repeat(30));
+                if (this.inventory.size === 0) {
+                    log("Empty inventory");
+                } else {
+                    for (let [item, quantity] of this.inventory) {
+                        log(`${item.padEnd(20)} | ${quantity} units`);
+                    }
+                }
+                log("=".repeat(30));
+            }
+        }
+
+        function runTask3() {
+            log("📝 TASK 3: INVENTORY DATABASE");
+            log("=".repeat(30));
+            
+            const store = new InventoryDatabase();
+            store.addItem("Laptops", 15);
+            store.addItem("Mice", 50);
+            store.addItem("Keyboards", 25);
+            store.addItem("Laptops", 5);
+            
+            store.checkAvailability("Laptops");
+            store.checkAvailability("Tablets");
+            
+            store.removeItem("Mice", 10);
+            store.displayInventory();
+            log("");
+        }
+
+        // =============================================================================
+        // TASK 4: STRING MANIPULATION
+        // =============================================================================
+        function runTask4() {
+            log("📝 TASK 4: STRING MANIPULATION");
+            log("=".repeat(30));
+            
+            // String Slicing
+            log("✂️ String Slicing Examples:");
+            const text = "JavaScript is awesome!";
+            log(`Original: "${text}"`);
+            log(`First 10 chars: "${text.slice(0, 10)}"`);
+            log(`Last 8 chars: "${text.slice(-8)}"`);
+            log(`Middle (chars 5-15): "${text.slice(5, 15)}"`);
+            log("");
+            
+            // String Concatenation
+            log("🔗 String Concatenation Examples:");
+            const firstName = "John";
+            const lastName = "Doe";
+            const age = 25;
+            
+            const greeting1 = "Hello, " + firstName + " " + lastName + "!";
+            log(`Method 1 (+): ${greeting1}`);
+            
+            const greeting2 = `Hello, ${firstName} ${lastName}! You are ${age} years old.`;
+            log(`Method 2 (template): ${greeting2}`);
+            log("");
+            
+            // Palindrome Checker
+            function checkPalindrome(text) {
+                const cleaned = text.toLowerCase().replace(/[^a-z0-9]/g, '');
+                const reversed = cleaned.split('').reverse().join('');
+                const isPalindrome = cleaned === reversed;
+                
+                log(`🔄 Palindrome Check for: "${text}"`);
+                log(`Cleaned: "${cleaned}"`);
+                log(`Is Palindrome: ${isPalindrome ? '✅ YES' : '❌ NO'}`);
+                return isPalindrome;
+            }
+            
+            const testCases = ["racecar", "A man a plan a canal Panama", "hello", "Madam"];
+            testCases.forEach(test => checkPalindrome(test));
+            log("");
+        }
+
+        // =============================================================================
+        // TASK 5: ARRAY/LIST MANIPULATION
+        // =============================================================================
+        function runTask5() {
+            log("📝 TASK 5: ARRAY MANIPULATION");
+            log("=".repeat(30));
+            
+            // Creating arrays
+            log("🏗️ Creating Arrays:");
+            const fruits = ["apple", "banana", "orange"];
+            log(`Fruits array: [${fruits.join(', ')}]`);
+            
+            const numbers = [1, 2, 3, 4, 5];
+            log(`Numbers array: [${numbers.join(', ')}]`);
+            log("");
+            
+            // Adding elements
+            log("➕ Adding Elements:");
+            fruits.push("grape");
+            log(`After push('grape'): [${fruits.join(', ')}]`);
+            
+            fruits.unshift("strawberry");
+            log(`After unshift('strawberry'): [${fruits.join(', ')}]`);
+            log("");
+            
+            // Advanced operations
+            log("🔥 Advanced Array Operations:");
+            log(`Numbers: [${numbers.join(', ')}]`);
+            
+            const squared = numbers.map(n => n * n);
+            log(`Squared: [${squared.join(', ')}]`);
+            
+            const evens = numbers.filter(n => n % 2 === 0);
+            log(`Even numbers: [${evens.join(', ')}]`);
+            
+            const sum = numbers.reduce((acc, n) => acc + n, 0);
+            log(`Sum of all numbers: ${sum}`);
+            log("");
+        }
+
+        // =============================================================================
+        // TASK 6: TEMPERATURE CONVERTER
+        // =============================================================================
+        class TemperatureConverter {
+            celsiusToFahrenheit(c) { return (c * 9/5) + 32; }
+            fahrenheitToCelsius(f) { return (f - 32) * 5/9; }
+            celsiusToKelvin(c) { return c + 273.15; }
+            kelvinToCelsius(k) { return k - 273.15; }
+            
+            convertTemperature(value, fromUnit, toUnit) {
+                if (fromUnit === toUnit) return value;
+                
+                let celsius;
+                switch(fromUnit) {
+                    case 'C': celsius = value; break;
+                    case 'F': celsius = this.fahrenheitToCelsius(value); break;
+                    case 'K': celsius = this.kelvinToCelsius(value); break;
+                }
+                
+                let result;
+                switch(toUnit) {
+                    case 'C': result = celsius; break;
+                    case 'F': result = this.celsiusToFahrenheit(celsius); break;
+                    case 'K': result = this.celsiusToKelvin(celsius); break;
+                }
+                
+                return Math.round(result * 100) / 100;
+            }
+        }
+
+        function runTask6() {
+            log("📝 TASK 6: TEMPERATURE CONVERTER");
+            log("=".repeat(30));
+            
+            const converter = new TemperatureConverter();
+            
+            const testCases = [
+                { value: 0, from: 'C', to: 'F', desc: "Water freezing point" },
+                { value: 100, from: 'C', to: 'F', desc: "Water boiling point" },
+                { value: 32, from: 'F', to: 'C', desc: "Water freezing point" },
+                { value: 212, from: 'F', to: 'C', desc: "Water boiling point" },
+                { value: 25, from: 'C', to: 'K', desc: "Room temperature in Kelvin" }
+            ];
+            
+            testCases.forEach(test => {
+                const result = converter.convertTemperature(test.value, test.from, test.to);
+                log(`${test.desc}: ${test.value}°${test.from} = ${result}°${test.to}`);
+            });
+            log("");
+        }
+
+        // =============================================================================
+        // TASK 7: JAVASCRIPT QUIRKS EXPLORER
+        // =============================================================================
+        function runTask7() {
+            log("📝 TASK 7: JAVASCRIPT QUIRKS 🤪");
+            log("=".repeat(30));
+            
+            log("🔀 Type Coercion Madness:");
+            const quirks = [
+                { expr: "'5' + 3", result: '5' + 3 },
+                { expr: "'5' - 3", result: '5' - 3 },
+                { expr: "true + true", result: true + true },
+                { expr: "[] + []", result: [] + [] },
+                { expr: "0.1 + 0.2", result: 0.1 + 0.2 },
+                { expr: "null + 1", result: null + 1 }
+            ];
+            
+            quirks.forEach(quirk => {
+                log(`${quirk.expr.padEnd(15)} = ${JSON.stringify(quirk.result)} (${typeof quirk.result})`);
+            });
+            
+            log("");
+            log("🔢 Number Quirks:");
+            log(`typeof NaN: ${typeof NaN}`);
+            log(`NaN == NaN: ${NaN == NaN}`);
+            log(`0.1 + 0.2 === 0.3: ${0.1 + 0.2 === 0.3}`);
+            log(`Math.max(): ${Math.max()}`);
+            log(`Math.min(): ${Math.min()}`);
+            
+            log("");
+            log("🎉 JavaScript: Making developers question reality since 1995!");
+            log("");
+        }
+
+        // =============================================================================
+        // INTERACTIVE FUNCTIONS
+        // =============================================================================
+        function convertTemperature() {
+            const value = parseFloat(document.getElementById('tempInput').value);
+            const fromUnit = document.getElementById('fromUnit').value;
+            const toUnit = document.getElementById('toUnit').value;
+            
+            if (isNaN(value)) {
+                document.getElementById('tempResult').innerHTML = '❌ Please enter a valid number';
+                return;
+            }
+            
+            const converter = new TemperatureConverter();
+            const result = converter.convertTemperature(value, fromUnit, toUnit);
+            
+            document.getElementById('tempResult').innerHTML = 
+                `🌡️ ${value}°${fromUnit} = <strong>${result}°${toUnit}</strong>`;
+            
+            log(`🌡️ Interactive Conversion: ${value}°${fromUnit} = ${result}°${toUnit}`);
+        }
+
+        function addToInventory() {
+            const name = document.getElementById('itemName').value;
+            const qty = parseInt(document.getElementById('itemQty').value);
+            
+            if (!name || isNaN(qty) || qty <= 0) {
+                log('❌ Please enter valid item name and quantity');
+                return;
+            }
+            
+            if (globalInventory.has(name)) {
+                globalInventory.set(name, globalInventory.get(name) + qty);
+                log(`✅ Added ${qty} ${name}(s). Total: ${globalInventory.get(name)}`);
+            } else {
+                globalInventory.set(name, qty);
+                log(`🆕 New item '${name}' added with quantity: ${qty}`);
+            }
+        }
+
+        function checkInventory() {
+            const name = document.getElementById('itemName').value;
+            if (!name) {
+                log('❌ Please enter an item name');
+                return;
+            }
+            
+            if (globalInventory.has(name)) {
+                const qty = globalInventory.get(name);
+                log(`📋 ${name}: ${qty} units available`);
+            } else {
+                log(`❌ ${name} is not in inventory`);
+            }
+        }
+
+        function removeFromInventory() {
+            const name = document.getElementById('itemName').value;
+            const qty = parseInt(document.getElementById('itemQty').value);
+            
+            if (!name || isNaN(qty) || qty <= 0) {
+                log('❌ Please enter valid item name and quantity');
+                return;
+            }
+            
+            if (!globalInventory.has(name)) {
+                log(`❌ Cannot remove ${name} - not in inventory`);
+                return;
+            }
+            
+            const currentQty = globalInventory.get(name);
+            if (currentQty < qty) {
+                log(`⚠️ Cannot remove ${qty} ${name}(s) - only ${currentQty} available`);
+                return;
+            }
+            
+            const newQty = currentQty - qty;
+            if (newQty === 0) {
+                globalInventory.delete(name);
+                log(`🗑️ ${name} completely removed from inventory`);
+            } else {
+                globalInventory.set(name, newQty);
+                log(`📉 Removed ${qty} ${name}(s). Remaining: ${newQty}`);
+            }
+        }
+
+        function showInventory() {
+            log("📊 Current Interactive Inventory:");
+            log("=".repeat(30));
+            if (globalInventory.size === 0) {
+                log("Empty inventory - add some items!");
+            } else {
+                for (let [item, quantity] of globalInventory) {
+                    log(`${item.padEnd(20)} | ${quantity} units`);
+                }
+            }
+            log("=".repeat(30));
+        }
+
+        // =============================================================================
+        // MAIN EXECUTION FUNCTION
+        // =============================================================================
+        function runAllTasks() {
+            clearConsole();
+            log("🚀 JavaScript Culminating Project - Complete Demonstration");
+            log("=".repeat(60));
+            log(`Date: ${new Date().toLocaleDateString()}`);
+            log(`Time: ${new Date().toLocaleTimeString()}`);
+            log("=".repeat(60));
+            log("");
+            
+            runTask1();
+            runTask2();
+            runTask3();
+            runTask4();
+            runTask5();
+            runTask6();
+            runTask7();
+            
+            log("🎯 All tasks completed successfully!");
+            log("💡 Try the interactive features above!");
+            log("🌟 GitHub: Ready to deploy!");
+        }
+
+        // Initialize with welcome message
+        window.onload = function() {
+            log("🚀 JavaScript Culminating Project Loaded!");
+            log("📚 Complete programming demonstration with 7+ tasks");
+            log("🎮 Interactive features included");
+            log("🌐 Ready for GitHub Pages deployment");
+            log("");
+            log("Click 'Run All Tasks' to see everything in action! ✨");
+        };
+    </script>
+</body>
+</html>
